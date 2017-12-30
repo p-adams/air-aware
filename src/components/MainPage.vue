@@ -5,9 +5,14 @@
           <div slot="subtitle">Monitor harmful air pollution</div>
       </q-toolbar>
      <q-select
-        v-model="select"
+        v-model="countrySelect"
         :options="supportedCountries"
      />
+     <q-select
+        v-if="supportedStates.length"
+        v-model="stateSelect"
+        :options="supportedStates"
+      />
 
    
   </q-layout>
@@ -27,13 +32,34 @@ export default {
   data() {
     return {
       supportedCountries: [],
-      select: ""
+      supportedStates: [],
+      countrySelect: "",
+      stateSelect: ""
     };
+  },
+  watch: {
+    countrySelect: function() {
+      this.supportedStates = [];
+      this.fetchSupportedStates().then(states =>
+        states.map(s =>
+          this.supportedStates.push({ label: s.state, value: s.state })
+        )
+      );
+    }
   },
   methods: {
     fetchSupportedCountries() {
       return this.$http
         .get(`http://api.airvisual.com/v2/countries?key=${KEY}`)
+        .then(response => response.data.data)
+        .catch(error => console.error(error));
+    },
+    fetchSupportedStates() {
+      return this.$http
+        .get(
+          `http://api.airvisual.com/v2/states?country=${this
+            .countrySelect}&key=${KEY}`
+        )
         .then(response => response.data.data)
         .catch(error => console.error(error));
     }
