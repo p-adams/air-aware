@@ -13,7 +13,11 @@
         v-model="stateSelect"
         :options="supportedStates"
       />
-
+      <q-select
+        v-if="supportedCities.length"
+        v-model="citySelect"
+        :options="supportedCities"
+      />
    
   </q-layout>
 </template>
@@ -33,8 +37,10 @@ export default {
     return {
       supportedCountries: [],
       supportedStates: [],
+      supportedCities: [],
       countrySelect: "",
-      stateSelect: ""
+      stateSelect: "",
+      citySelect: ""
     };
   },
   watch: {
@@ -43,6 +49,14 @@ export default {
       this.fetchSupportedStates().then(states =>
         states.map(s =>
           this.supportedStates.push({ label: s.state, value: s.state })
+        )
+      );
+    },
+    stateSelect: function() {
+      this.supportedCities = [];
+      this.fetchSupportedCities().then(cities =>
+        cities.map(c =>
+          this.supportedCities.push({ label: c.city, value: c.city })
         )
       );
     }
@@ -59,6 +73,15 @@ export default {
         .get(
           `http://api.airvisual.com/v2/states?country=${this
             .countrySelect}&key=${KEY}`
+        )
+        .then(response => response.data.data)
+        .catch(error => console.error(error));
+    },
+    fetchSupportedCities() {
+      return this.$http
+        .get(
+          `http://api.airvisual.com/v2/cities?state=${this
+            .stateSelect}&country=${this.countrySelect}&key=${KEY}`
         )
         .then(response => response.data.data)
         .catch(error => console.error(error));
