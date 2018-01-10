@@ -26,7 +26,7 @@ export default new VueRouter({
 
   routes: [
     { path: "/", component: load("MainPage") },
-
+    { path: "/the-select-menus", component: load("the-select-menus") },
     // Always leave this last one
     { path: "*", component: load("Error404") } // Not found
   ]
