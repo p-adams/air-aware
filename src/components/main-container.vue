@@ -7,16 +7,21 @@
      <q-tabs slot="navigation">
        <q-route-tab
           slot="title"
-          to="/"
-          label="Main"
+          to="/the-loading-page"
+          label="Home"
         />
         <q-route-tab
           slot="title"
           to="/the-select-menus"
-          label="Browse"
+          label="Browse locations"
+        />
+        <q-route-tab
+          slot="title"
+          to="/the-monitor-keys"
+          label="Monitor keys"
         />
      </q-tabs>
-   
+
   </q-layout>
 </template>
 <script>

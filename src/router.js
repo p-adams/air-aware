@@ -25,7 +25,8 @@ export default new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
 
   routes: [
-    { path: "/", component: load("MainPage") },
+    { path: "/", component: load("main-container") },
+    { path: "/home", component: load("the-loading-page") },
     { path: "/the-select-menus", component: load("the-select-menus") },
     // Always leave this last one
     { path: "*", component: load("Error404") } // Not found
