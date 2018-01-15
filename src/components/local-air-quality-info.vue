@@ -1,6 +1,6 @@
 <template>
   <div>
-      Air quality near you
+      <h5>Air quality in {{ cityData }}</h5>
   </div>
 </template>
 <script>
@@ -10,9 +10,19 @@ export default {
   created() {
     this.$http
       .get(
-        `http://api.airvisual.com/v2/city?city=Los Angeles&state=California&country=USA&key=${KEY}`
+        `http://api.airvisual.com/v2/city?city=Detroit&state=Michigan&country=USA&key=${KEY}`
       )
-      .then(results => console.log(results));
+      .then(results => (this.localAirQuality = results.data.data));
+  },
+  data() {
+    return {
+      localAirQuality: ""
+    };
+  },
+  computed: {
+    cityData() {
+      return this.localAirQuality.city;
+    }
   }
 };
 </script>
