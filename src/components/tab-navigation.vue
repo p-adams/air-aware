@@ -1,13 +1,9 @@
 <template>
   <q-layout ref="layout">
-      <q-toolbar slot="header">
-          <q-toolbar-title>Air Aware</q-toolbar-title>
-          <div slot="subtitle">Monitor harmful air pollution</div>
-      </q-toolbar>
      <q-tabs slot="navigation">
        <q-route-tab
           slot="title"
-          to="/the-loading-page"
+          to="/home"
           label="Home"
         />
         <q-route-tab
@@ -21,21 +17,16 @@
           label="Monitor keys"
         />
      </q-tabs>
-
   </q-layout>
 </template>
 <script>
-import { QLayout, QToolbar, QToolbarTitle, QTabs, QRouteTab } from "quasar";
-import TheSelectMenus from "./the-select-menus";
+import { QLayout, QTabs, QRouteTab } from "quasar";
 export default {
-  name: "MainPage",
+  name: "TabNavigation",
   components: {
     QLayout,
-    QToolbar,
-    QToolbarTitle,
     QTabs,
-    QRouteTab,
-    TheSelectMenus
+    QRouteTab
   }
 };
 </script>
