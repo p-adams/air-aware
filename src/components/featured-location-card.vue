@@ -1,8 +1,8 @@
 <template>
-    <q-card>
+    <q-card class="card-outline">
         <q-card-title>Your local air quality</q-card-title>
         <q-card-main>
-            <q-list>
+            <q-list class="list-background">
                 <q-list-header>Air quality in {{ locationData.city }}</q-list-header>
                 <q-item>City: {{ locationData.city }}</q-item>
                 <q-item>State: {{ locationData.state }}</q-item>
@@ -70,3 +70,11 @@ export default {
   }
 };
 </script>
+<style scoped>
+.card-outline {
+  background: lightgray;
+}
+.list-background {
+  background: white;
+}
+</style>
