@@ -22,9 +22,8 @@
                 </q-item>
                 <q-item>
                     <q-list>
-                        <q-list-header>Pollution</q-list-header>
+                        <q-list-header>Pollution {{ pollution }}</q-list-header>
                         <q-item>AQI: {{ pollution.aqius }}</q-item>
-                        <q-item>Main pollutant: {{ pollution.mainus }}</q-item>
                     </q-list>
                 </q-item>
             </q-list>

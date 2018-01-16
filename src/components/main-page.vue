@@ -1,6 +1,9 @@
 <template>
   <div>
-    <featured-location-card :location-data="localAirQuality" />
+    <featured-location-card
+      v-if="dataDidLoad"
+      :location-data="localAirQuality"
+    />
   </div>
 </template>
 <script>
@@ -16,20 +19,16 @@ export default {
       .get(
         `http://api.airvisual.com/v2/city?city=Detroit&state=Michigan&country=USA&key=${KEY}`
       )
-      .then(results => (this.localAirQuality = results.data.data));
+      .then(results => {
+        this.dataDidLoad = true;
+        this.localAirQuality = results.data.data;
+      });
   },
   data() {
     return {
-      localAirQuality: ""
+      localAirQuality: "",
+      dataDidLoad: false
     };
-  },
-  computed: {
-    cityData() {
-      return this.localAirQuality.city;
-    },
-    stateData() {
-      return this.localAirQuality.state;
-    }
   }
 };
 </script>
