@@ -1,9 +1,8 @@
 <template>
-  <div>monitor keys</div>
+  <div>Featured Locations</div>
 </template>
 <script>
 export default {
-  name: "TheMonitorKeys"
+  name: "FeaturedLocations"
 };
 </script>
-

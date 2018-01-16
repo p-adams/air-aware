@@ -5,7 +5,7 @@
         <q-toolbar-title>Air Aware</q-toolbar-title>
         <div slot="subtitle">Monitor harmful air pollution</div>
       </q-toolbar>
-      <tab-navigation/>
+      <app-navigation/>
     <router-view />
     </q-layout>
   </div>
@@ -13,16 +13,18 @@
 
 <script>
 import { QLayout, QToolbar, QToolbarTitle } from "quasar";
-import TabNavigation from "./components/tab-navigation";
+import AppNavigation from "./components/app-navigation";
 export default {
   name: "App",
   components: {
     QLayout,
     QToolbar,
     QToolbarTitle,
-    TabNavigation
+    AppNavigation
   }
 };
 </script>
 
-<style></style>
+<style>
+
+</style>

@@ -25,10 +25,9 @@ export default new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
 
   routes: [
-    { path: "/", component: load("tab-navigation") },
-    { path: "/home", component: load("local-air-quality-info") },
-    { path: "/the-select-menus", component: load("the-select-menus") },
-    { path: "/the-monitor-keys", component: load("the-monitor-keys") },
+    { path: "/", component: load("main-page") },
+    { path: "/browse", component: load("location-browser") },
+    { path: "/featured", component: load("featured-locations") },
     // Always leave this last one
     { path: "*", component: load("Error404") } // Not found
   ]

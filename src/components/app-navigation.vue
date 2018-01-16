@@ -2,17 +2,17 @@
     <q-tabs slot="navigation">
       <q-route-tab
         slot="title"
-        to="/home"
+        to="/"
         label="Home"
       />
       <q-route-tab
         slot="title"
-        to="/the-select-menus"
+        to="/browse"
         label="Browse locations"
       />
       <q-route-tab
         slot="title"
-        to="/the-monitor-keys"
+        to="/featured"
         label="Monitor keys"
       />
     </q-tabs>
@@ -20,7 +20,7 @@
 <script>
 import { QLayout, QTabs, QRouteTab } from "quasar";
 export default {
-  name: "TabNavigation",
+  name: "AppNavigation",
   components: {
     QLayout,
     QTabs,
@@ -28,4 +28,3 @@ export default {
   }
 };
 </script>
-
