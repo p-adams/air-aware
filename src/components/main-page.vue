@@ -1,24 +1,15 @@
 <template>
   <div>
-    <q-card>
-      <q-card-title>Air quality in {{ cityData }}</q-card-title>
-      <q-card-main>
-        <p> {{ stateData }} </p>
-        <p>{{ localAirQuality }}
-        </p>
-        </q-card-main>
-    </q-card>
+    <featured-location-card :location-data="localAirQuality" />
   </div>
 </template>
 <script>
 const KEY = "LRNaGJDPJvJEkdWuP";
-import { QCard, QCardTitle, QCardMain } from "quasar";
+import FeaturedLocationCard from "./featured-location-card";
 export default {
   name: "MainPage",
   components: {
-    QCard,
-    QCardTitle,
-    QCardMain
+    FeaturedLocationCard
   },
   created() {
     this.$http
