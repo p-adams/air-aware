@@ -22,7 +22,7 @@
                 </q-item>
                 <q-item>
                     <q-list>
-                        <q-list-header>Pollution {{ pollution }}</q-list-header>
+                        <q-list-header>Pollution</q-list-header>
                         <q-item>AQI: {{ pollution.aqius }}</q-item>
                     </q-list>
                 </q-item>

@@ -7,13 +7,13 @@
       />
       <q-route-tab
         slot="title"
-        to="/browse"
-        label="Browse locations"
+        to="/browse-location"
+        label="Browse your location"
       />
       <q-route-tab
         slot="title"
-        to="/featured"
-        label="Monitor keys"
+        to="/browse"
+        label="Browse all locations"
       />
     </q-tabs>
 </template>
