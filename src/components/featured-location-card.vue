@@ -11,11 +11,20 @@
                 <q-item>
                     <q-list>
                         <q-list-header>Weather</q-list-header>
-                        <q-item>Time: {{ weather.ts }}</q-item>
+                        <q-item>Date/Time: {{ formattedDate }}</q-item>
                         <q-item>Humidity: {{ weather.hu }}%</q-item>
-                        <q-item>Icon {{ weather.ic }} </q-item>
                         <q-item>Atmospheric pressure: {{ weather.pr }} hPa</q-item>
-                        <q-item>Temperature: {{ weather.tp }}</q-item>
+                        <q-item>
+                          <span class="select-label">Temperature:</span>
+                          <q-select
+                            v-model="temperature"
+                            :options="selectTempConversion"
+                          />
+                          <span
+                            class="temp-display"
+                            v-html="currentTemperature"
+                          >{{ currentTemperature }}</span>
+                        </q-item>
                         <q-item>Wind direction: {{ weather.wd }}</q-item>
                         <q-item>Wind speed: {{ weather.ws }}</q-item>
                     </q-list>
@@ -23,7 +32,7 @@
                 <q-item>
                     <q-list>
                         <q-list-header>Pollution</q-list-header>
-                        <q-item>AQI: {{ pollution.aqius }}</q-item>
+                        <q-item>Air quality index [AQI]: {{ pollution.aqius }}</q-item>
                     </q-list>
                 </q-item>
             </q-list>
@@ -31,14 +40,21 @@
     </q-card>
 </template>
 <script>
+/*
+ * Todos:
+ *    add more info for atmospheric pressure, wind direction, and wind speed units
+ *    provide feedback on AQI levels
+ */
 import {
   QCard,
   QCardTitle,
   QCardMain,
   QList,
   QListHeader,
-  QItem
+  QItem,
+  QSelect
 } from "quasar";
+import dateFormat from "dateformat";
 export default {
   name: "FeaturedLocationCard",
   components: {
@@ -47,7 +63,8 @@ export default {
     QCardMain,
     QList,
     QListHeader,
-    QItem
+    QItem,
+    QSelect
   },
   props: {
     locationData: {
@@ -55,6 +72,17 @@ export default {
       required: true,
       default: ""
     }
+  },
+  data() {
+    return {
+      temperature: "F",
+      formattedCels: "&#8451;",
+      formattedFahr: "&#8457;",
+      selectTempConversion: [
+        { label: "Fahrenheit", value: "F" },
+        { label: "Celsius", value: "C" }
+      ]
+    };
   },
   computed: {
     coordinates() {
@@ -66,6 +94,15 @@ export default {
     },
     pollution() {
       return this.locationData.current.pollution;
+    },
+    currentTemperature() {
+      const celsiusToFahrenheit = this.weather.tp * 1.8 + 32;
+      return this.temperature === "F"
+        ? `${celsiusToFahrenheit} &#8457;`
+        : `${this.weather.tp} &#8451;`;
+    },
+    formattedDate() {
+      return dateFormat(this.weather.td, "dddd, mmmm dS, yyyy, h:MM:ss TT");
     }
   }
 };
@@ -76,5 +113,11 @@ export default {
 }
 .list-background {
   background: white;
+}
+.temp-display {
+  margin-left: 5px;
+}
+.select-label {
+  margin-right: 5px;
 }
 </style>
