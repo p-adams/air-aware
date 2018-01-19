@@ -66,8 +66,9 @@ export default {
     fetchSupportedStates() {
       return this.$http
         .get(
-          `http://api.airvisual.com/v2/states?country=${this
-            .countrySelect}&key=${KEY}`
+          `http://api.airvisual.com/v2/states?country=${
+            this.countrySelect
+          }&key=${KEY}`
         )
         .then(response => response.data.data)
         .catch(error => console.error(error));
@@ -75,8 +76,9 @@ export default {
     fetchSupportedCities() {
       return this.$http
         .get(
-          `http://api.airvisual.com/v2/cities?state=${this
-            .stateSelect}&country=${this.countrySelect}&key=${KEY}`
+          `http://api.airvisual.com/v2/cities?state=${
+            this.stateSelect
+          }&country=${this.countrySelect}&key=${KEY}`
         )
         .then(response => response.data.data)
         .catch(error => console.error(error));
@@ -88,4 +90,3 @@ export default {
   }
 };
 </script>
-

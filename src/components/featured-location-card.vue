@@ -13,7 +13,7 @@
                         <q-list-header>Weather</q-list-header>
                         <q-item>Date/Time: {{ formattedDate }}</q-item>
                         <q-item>Humidity: {{ weather.hu }}%</q-item>
-                        <q-item>Atmospheric pressure: {{ weather.pr }} hPa</q-item>
+                        <q-item>Atmospheric pressure: {{ weather.pr }} millibars</q-item>
                         <q-item>
                           <span class="select-label">Temperature:</span>
                           <q-select
@@ -26,7 +26,14 @@
                           >{{ currentTemperature }}</span>
                         </q-item>
                         <q-item>Wind direction: {{ weather.wd }}</q-item>
-                        <q-item>Wind speed: {{ weather.ws }}</q-item>
+                        <q-item>
+                          <span class="select-label">Wind speed:</span>
+                          <q-select
+                            v-model="speed"
+                            :options="selectSpeedConversion"
+                          />
+                          {{ currentWindSpeed }}
+                        </q-item>
                     </q-list>
                 </q-item>
                 <q-item>
@@ -76,11 +83,14 @@ export default {
   data() {
     return {
       temperature: "F",
-      formattedCels: "&#8451;",
-      formattedFahr: "&#8457;",
       selectTempConversion: [
         { label: "Fahrenheit", value: "F" },
         { label: "Celsius", value: "C" }
+      ],
+      speed: "mph",
+      selectSpeedConversion: [
+        { label: "mph", value: "mph" },
+        { label: "kph", value: "kph" }
       ]
     };
   },
@@ -103,6 +113,16 @@ export default {
     },
     formattedDate() {
       return dateFormat(this.weather.td, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+    },
+    calculatedMPH() {
+      return this.weather.ws * 2.236936;
+    },
+    currentWindSpeed() {
+      let speed =
+        this.speed === "mph"
+          ? (speed = this.weather.ws * 2.236936)
+          : (speed = this.weather.ws * 3.6);
+      return `${speed} ${this.speed}`;
     }
   }
 };
