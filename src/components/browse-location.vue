@@ -1,18 +1,36 @@
 <template>
-  <div></div>
+  <div>
+      <q-field
+        helper="Add city name then press enter"
+        :count="20"
+      >
+        <q-input
+            v-model="city"
+            @keydown.enter="captureCityFromInput"
+        />
+      </q-field>
+  </div>
 </template>
 <script>
+import { QField, QInput } from "quasar";
 export default {
   name: "BrowseLocation",
+  components: {
+    QField,
+    QInput
+  },
   created() {
     this.findCoordinates();
   },
   data() {
     return {
-      city: "Detroit"
+      city: ""
     };
   },
   methods: {
+    captureCityFromInput() {
+      const city = this.city.trim();
+    },
     findCoordinates() {
       this.$http
         .get(
