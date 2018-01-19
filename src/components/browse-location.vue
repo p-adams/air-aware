@@ -19,19 +19,18 @@ export default {
     QField,
     QInput
   },
-  created() {
-    this.findCoordinates();
-  },
   data() {
     return {
-      city: ""
+      city: "",
+      state: "",
+      country: "",
+      latitude: "",
+      longitude: ""
     };
   },
   methods: {
     captureCityFromInput() {
-      const city = this.city.trim();
-    },
-    findCoordinates() {
+      const city = this.city;
       this.$http
         .get(
           `https://maps.googleapis.com/maps/api/geocode/json?address=${
@@ -39,12 +38,15 @@ export default {
           }`
         )
         .then(geoCoords => {
-          const state = geoCoords.data.results[0].address_components[2];
-          const country = geoCoords.data.results[0].address_components[3];
-          console.log(state, country);
+          this.state =
+            geoCoords.data.results[0].address_components[2].long_name;
+          this.country =
+            geoCoords.data.results[0].address_components[3].short_name;
           const coordinates = geoCoords.data.results[0].geometry.location;
-          console.log(coordinates.lat, coordinates.lng);
-        });
+          this.latitude = coordinates.lat;
+          this.longitude = coordinates.lng;
+        })
+        .catch(errorSearchingForCity => console.error(errorSearchingForCity));
     }
   }
 };
