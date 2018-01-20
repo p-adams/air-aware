@@ -1,19 +1,24 @@
 <template>
   <div>
+    <h5>Select a country</h5>
       <q-select
           v-model="countrySelect"
           :options="supportedCountries"
       />
-      <q-select
-          v-if="supportedStates.length"
-          v-model="stateSelect"
-          :options="supportedStates"
-        />
+      <div v-if="supportedStates.length">
+        <h5>Select a state/province</h5>
         <q-select
-          v-if="supportedCities.length"
+            v-model="stateSelect"
+            :options="supportedStates"
+          />
+      </div>
+      <div v-if="supportedCities.length">
+        <h5>Select city</h5>
+        <q-select
           v-model="citySelect"
           :options="supportedCities"
         />
+      </div>
   </div>
 </template>
 <script>

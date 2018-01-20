@@ -9,10 +9,12 @@
             @keydown.enter="captureCityFromInput"
         />
       </q-field>
+      {{ locationAirQuality }}
   </div>
 </template>
 <script>
 import { QField, QInput } from "quasar";
+const KEY = "LRNaGJDPJvJEkdWuP";
 export default {
   name: "BrowseLocation",
   components: {
@@ -22,10 +24,9 @@ export default {
   data() {
     return {
       city: "",
-      state: "",
-      country: "",
       latitude: "",
-      longitude: ""
+      longitude: "",
+      locationAirQuality: ""
     };
   },
   methods: {
@@ -38,15 +39,24 @@ export default {
           }`
         )
         .then(geoCoords => {
-          this.state =
-            geoCoords.data.results[0].address_components[2].long_name;
-          this.country =
-            geoCoords.data.results[0].address_components[3].short_name;
           const coordinates = geoCoords.data.results[0].geometry.location;
           this.latitude = coordinates.lat;
           this.longitude = coordinates.lng;
+          this.locationAirQuality = this.getLocationAirQuality(
+            this.latitude,
+            this.longitude
+          );
         })
         .catch(errorSearchingForCity => console.error(errorSearchingForCity));
+    },
+    getLocationAirQuality(latitude, longitude) {
+      return this.$http
+        .get(
+          `http://api.airvisual.com/v2/nearest_city?lat=${latitude}&lon=${longitude}&key=${KEY}`
+        )
+        .then(results => {
+          return results.data.data;
+        });
     }
   }
 };
