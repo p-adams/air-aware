@@ -1,5 +1,5 @@
 <template>
-    <q-tabs slot="navigation">
+    <q-tabs slot="navigation" class="bg-secondary">
       <q-route-tab
         slot="title"
         to="/"

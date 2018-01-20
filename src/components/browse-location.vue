@@ -1,37 +1,48 @@
 <template>
   <div>
-      <q-field
-        helper="Add city name then press enter"
-        :count="20"
-      >
-        <q-input
-            v-model="city"
-            @keydown.enter="captureCityFromInput"
-        />
-      </q-field>
-      {{ locationAirQuality }}
+    <q-card>
+      <q-card-title>Browse air quality by city name</q-card-title>
+      <q-card-main>
+        <q-field
+          helper="Add city name then press enter"
+          :count="20"
+        >
+          <q-input
+              v-model="city"
+              @keydown.enter="captureCityFromInput"
+              placeholder="For example, Brooklyn..."
+          />
+        </q-field>
+      </q-card-main>
+    </q-card>
+     <div v-if="locationDataDidLoad">
+       <feature-location-card :location-data="locationAirQuality"/>
+     </div>
   </div>
 </template>
 <script>
-import { QField, QInput } from "quasar";
+import { QCard, QCardTitle, QCardMain, QField, QInput } from "quasar";
+import FeatureLocationCard from "./featured-location-card";
 const KEY = "LRNaGJDPJvJEkdWuP";
 export default {
   name: "BrowseLocation",
   components: {
+    QCard,
+    QCardTitle,
+    QCardMain,
     QField,
-    QInput
+    QInput,
+    FeatureLocationCard
   },
   data() {
     return {
       city: "",
-      latitude: "",
-      longitude: "",
-      locationAirQuality: ""
+      locationAirQuality: "",
+      locationDataDidLoad: false
     };
   },
   methods: {
     captureCityFromInput() {
-      const city = this.city;
       this.$http
         .get(
           `https://maps.googleapis.com/maps/api/geocode/json?address=${
@@ -40,22 +51,19 @@ export default {
         )
         .then(geoCoords => {
           const coordinates = geoCoords.data.results[0].geometry.location;
-          this.latitude = coordinates.lat;
-          this.longitude = coordinates.lng;
-          this.locationAirQuality = this.getLocationAirQuality(
-            this.latitude,
-            this.longitude
-          );
+          this.getLocationAirQuality(coordinates.lat, coordinates.lng);
         })
         .catch(errorSearchingForCity => console.error(errorSearchingForCity));
+      this.city = "";
     },
     getLocationAirQuality(latitude, longitude) {
-      return this.$http
+      this.$http
         .get(
           `http://api.airvisual.com/v2/nearest_city?lat=${latitude}&lon=${longitude}&key=${KEY}`
         )
         .then(results => {
-          return results.data.data;
+          this.locationDataDidLoad = true;
+          this.locationAirQuality = results.data.data;
         });
     }
   }

@@ -6,7 +6,7 @@
         <div slot="subtitle">Monitor harmful air pollution</div>
       </q-toolbar>
       <app-navigation/>
-    <router-view />
+      <router-view />
     </q-layout>
   </div>
 </template>
@@ -24,7 +24,6 @@ export default {
   }
 };
 </script>
-
-<style>
+<style scoped>
 
 </style>

@@ -1,34 +1,32 @@
 <template>
-  <div>
-    <featured-location-card
-      v-if="dataDidLoad"
-      :location-data="localAirQuality"
-    />
+  <div class="container">
+    <q-carousel
+      class="text-white"
+      dots
+    >
+      <div slot="slide" class="bg-secondary">
+        Air Aware is an application that provides reliable, real-time air quality information...
+      </div>
+      <div slot="slide" class="bg-secondary">
+        Browse locations near you...
+      </div>
+      <div slot="slide" class="bg-secondary">
+        Browse air quality information in all supported countries...
+      </div>
+    </q-carousel>
   </div>
 </template>
 <script>
-const KEY = "LRNaGJDPJvJEkdWuP";
-import FeaturedLocationCard from "./featured-location-card";
+import { QCarousel } from "quasar";
 export default {
   name: "MainPage",
   components: {
-    FeaturedLocationCard
-  },
-  created() {
-    this.$http
-      .get(
-        `http://api.airvisual.com/v2/city?city=Detroit&state=Michigan&country=USA&key=${KEY}`
-      )
-      .then(results => {
-        this.dataDidLoad = true;
-        this.localAirQuality = results.data.data;
-      });
-  },
-  data() {
-    return {
-      localAirQuality: "",
-      dataDidLoad: false
-    };
+    QCarousel
   }
 };
 </script>
+<style scoped>
+.container {
+  margin-top: 60px;
+}
+</style>

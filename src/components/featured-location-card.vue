@@ -1,6 +1,6 @@
 <template>
     <q-card class="card-outline">
-        <q-card-title>Your local air quality</q-card-title>
+        <q-card-title>Local air quality nearest to you</q-card-title>
         <q-card-main>
             <q-list class="list-background">
                 <q-list-header>Air quality in {{ locationData.city }}</q-list-header>
